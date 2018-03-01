@@ -7,10 +7,32 @@
 	<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet"> 
 </head>
 <body>
+
+	<div class="overlay">
+		<div class="overlay-div center">
+			<h1 id="text">Type Faster</h1>
+			<div class="results">
+				<p>
+					Final Word Count: 
+					<span class="final-word-count"></span>
+				</p>
+				<p>
+					WPM: 
+					<span class="gross-wpm"></span>
+				</p>
+				<p>
+					Time:
+					<span class="total-time"></span>
+				</p>
+			</div>
+			<button class="start">New Game</button>
+		</div>
+	</div>
+
 	<div class="container">
 
 		<div>
-			<p>Word Count: <span class="word-count">0</span></p>
+			<p>Character Count: <span class="word-count">0</span></p>
 		</div>
 
 		<div>
@@ -24,9 +46,6 @@
 				<input autofocus="autofocus" type="text">
 			</div>
 
-			<div>
-				<button class="start">Start</button>
-			</div>
 		</div>
 
 		<div>

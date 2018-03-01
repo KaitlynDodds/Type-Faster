@@ -4,11 +4,12 @@ body {
 }
 
 p,
-input {
+input,
+button,
+h1 {
 	font-size: 1.8em;
 	color: #03120e;
 	font-family: 'Crimson Text', serif;
-	/*text-shadow: .1px .1px 1px #444545;*/
 }
 
 .center {
@@ -30,6 +31,7 @@ input {
 	min-height: 150px;
 	width: 500px;
 	padding: 10px 30px;
+	margin-bottom: 25px;
 	background-color: #fffcf7;
 }
 
@@ -45,4 +47,52 @@ input {
 
 .highlight {
 	color: red;
+}
+
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 2;
+}
+
+.overlay-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    width: 60%;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.overlay-div h1 {
+	margin: 0px 0px 15px 0px;
+	font-size: 5em; 
+	color: #fffcf7;
+	border-bottom: solid 1px #fffcf7;
+}
+
+.results {
+	display: none;
+}
+
+.results p {
+	color: #fffcf7;
+}
+
+.start {
+	width: 30%;
+	background-color: #03120e;
+	border: solid 2px #03120e;
+	color: #fff;
+	font-size: 1.8em;
+	cursor: pointer;
 }

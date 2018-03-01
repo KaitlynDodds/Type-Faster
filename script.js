@@ -1,6 +1,7 @@
 
-let currentQuote;
-let wordCount;
+let currentQuote = "";
+let numMinutes;
+let characterCount;
 
 const quotes = [
 	"The quick brown fox jumps over the lazy dog.",
@@ -36,6 +37,8 @@ const getTimeRemaining = function(endTime) {
 }
 
 const pickFutureDate = function(minutes = 1) {
+	numMinutes = minutes;
+
 	// select Date (minutes) from now
 	return new Date(Date.parse(new Date()) + minutes * 60 * 1000);
 }
@@ -56,8 +59,8 @@ const initializeTimer = function(futureDate) {
 
 		// check if timer is done
 		if (timeRemaining.total <= 0) {
-			endWPMTest();
 			clearInterval(interval);
+			endWPMTest();
 		}
 
 	}
@@ -68,30 +71,64 @@ const initializeTimer = function(futureDate) {
 
 }
 
+const calculateResults = function(charCount, minutesTyped) {
+
+	// calc total word count
+	let wordCount = Math.floor(charCount / 5);
+
+	// calculate wpm 
+	let gross = (Math.floor(charCount / 5) / minutesTyped);
+
+	// let net = gross - ( errorCount / minutesTyped );
+
+	return {
+		finalWordCount : wordCount, 
+		totalTime: minutesTyped,
+		grossWPM: gross
+	}
+
+}
+
+const displayResults = function(results) {
+
+	// update ui
+	document.querySelector('.final-word-count').innerHTML = results.finalWordCount;
+	document.querySelector('.gross-wpm').innerHTML = results.grossWPM;
+	document.querySelector('.total-time').innerHTML = ('0' + results.totalTime).slice(-2) + ":00";
+
+	document.querySelector('.results').style.display = "block";
+
+}
+
 
 /* WPM Functions ============================================================= */
 
 const endWPMTest = function() {
 
-	// get final word count
-	const finalWordCount = wordCount;
+	// disable input
+	disableInput();
+
+	// add overlay
+	overlayOn();
+
+	const results = calculateResults(characterCount, numMinutes);
 
 	// display results 
-	
-	
+	displayResults(results);
+
 }
 
 const setupTest = function() {
 
 	// reset word count
-	wordCount = 0;
-	updateWordCountUI(wordCount);
+	characterCount = 0;
+	updateCharCountUI(characterCount);
 
 	// new quote and clear input
 	resetQuoteAndInput();
 
 	// setup timer
-	const futureDate = pickFutureDate();
+	const futureDate = pickFutureDate(5);
 	
 	initializeTimer(futureDate);
 
@@ -179,12 +216,20 @@ const updateQuoteUI = function(quote, divide) {
 
 }
 
-const updateWordCountUI = function(count) {
-	document.querySelector('.word-count').innerHTML = count;
+const updateCharCountUI = function(charCount) {
+	document.querySelector('.word-count').innerHTML = charCount;
 }
 
+const overlayOn = function() {
+	document.querySelector('.overlay').style.display = "block";
+}
+
+const overlayOff = function() {
+	document.querySelector('.overlay').style.display = "none";
+}
 
 /* Event Listeners ========================================================= */
+
 
 // catch user input 
 const onInputListener = function(event) {
@@ -197,8 +242,8 @@ const onInputListener = function(event) {
 	// check if the user input matches the enire quote 
 	if (quoteArr.length === inputArr.length && isEqual(quoteArr, inputArr)) {
 		// quote is complete, reset 
-		wordCount++;
-		updateWordCountUI(wordCount);
+		characterCount++;
+		updateCharCountUI(characterCount);
 		resetQuoteAndInput();
 	}
 
@@ -207,9 +252,17 @@ const onInputListener = function(event) {
 		&& isEqual(quoteArr.slice(0, inputArr.length), inputArr)) {
 
 		// check if user has completed a word (space)
-		if (event.key === " ") {
-			wordCount++;
-			updateWordCountUI(wordCount);
+	console.log(event.key);
+		if (event.key !== "Unidentified" 
+			&& event.key !== "Shift"
+			&& event.key !== "Alt"
+			&& event.key !== "Meta" 
+			&& event.key !== "Enter"
+			&& event.key !== "Tab"
+			&& event.key !== "Backspace"
+			&& event.key !== "Delete") {
+			characterCount++;
+			updateCharCountUI(characterCount);
 		}
 
 		updateQuoteUI(currentQuote, inputArr.length);
@@ -222,6 +275,8 @@ document.querySelector('.input input').addEventListener('keyup', onInputListener
 
 
 const startWPMTest = function() {
+	overlayOff();
+
 	setupTest();
 }
 
@@ -230,13 +285,8 @@ document.querySelector('.start').addEventListener('click', startWPMTest);
 
 // reset user input on browser load
 const resetBrowser = function() {
-
-	wordCount = 0;
-
-	clearInput();
-
-    setQuote();
-
+	// start with overlay on
+	overlayOn();
 }
 
 document.querySelector('body').onload = resetBrowser;
