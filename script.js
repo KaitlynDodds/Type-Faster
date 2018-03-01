@@ -2,6 +2,7 @@
 let currentQuote = "";
 let numMinutes;
 let characterCount;
+let interval;
 
 const quotes = [
 	"The quick brown fox jumps over the lazy dog.",
@@ -59,15 +60,14 @@ const initializeTimer = function(futureDate) {
 
 		// check if timer is done
 		if (timeRemaining.total <= 0) {
-			clearInterval(interval);
-			endWPMTest();
+			endWPMTest(interval);
 		}
 
 	}
 
 	// setinterval
 	updateClock();
-	const interval = setInterval(updateClock, 1000);
+	interval = setInterval(updateClock, 1000);
 
 }
 
@@ -104,6 +104,8 @@ const displayResults = function(results) {
 /* WPM Functions ============================================================= */
 
 const endWPMTest = function() {
+	// stop timer
+	clearInterval(interval);
 
 	// disable input
 	disableInput();
@@ -270,6 +272,13 @@ const onInputListener = function(event) {
 
 document.querySelector('.input input').addEventListener('keyup', onInputListener);
 
+const endGameBtnListener = function() {
+
+	endWPMTest();
+
+}
+
+document.querySelector('.end-game button').addEventListener('click', endGameBtnListener);
 
 const startBtnListener = function() {
 	overlayOff();
@@ -305,6 +314,9 @@ document.querySelectorAll('.list-item').forEach((item) => {
 const resetBrowser = function() {
 	// start with overlay on
 	overlayOn();
+
+
+
 }
 
 document.querySelector('body').onload = resetBrowser;

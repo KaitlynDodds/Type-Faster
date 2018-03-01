@@ -37,12 +37,26 @@ h1 {
 
 .input {
 	padding: 10px 30px;
+	margin: 60px 0;
 }
 
 .input input {
 	border: none;
 	width: 100%;
 	text-align: center;
+}
+
+button {
+	width: 30%;
+	background-color: #03120e;
+	border: solid 2px #03120e;
+	color: #fff;
+	font-size: 1.8em;
+	cursor: pointer;
+}
+
+.end-game button {
+	width: 50%;
 }
 
 .highlight {
@@ -92,15 +106,6 @@ h1 {
 	margin: 15px;
 	font-size: 1.8em;
 	color: #fffcf7;
-}
-
-.start {
-	width: 30%;
-	background-color: #03120e;
-	border: solid 2px #03120e;
-	color: #fff;
-	font-size: 1.8em;
-	cursor: pointer;
 }
 
 ul {
