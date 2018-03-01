@@ -14,7 +14,78 @@ const quotes = [
 ];
 
 
-/* Functions ================================================================== */
+/* Timer Functions ========================================================== */
+
+const getTimeRemaining = function(endTime) {
+	// get seconds remaining in countdown from now to future date
+	let tr = Date.parse(endTime) - Date.parse(new Date());
+	
+	// get seconds remaining
+	let secondsRemaining = Math.floor((tr / 1000) % 60);
+	
+	// get minutes remaining
+	let minutesRemaining = Math.floor((tr / 1000 / 60) % 60);
+
+	let timeRemainingObj = {
+		total: tr,
+		seconds: secondsRemaining,
+		minutes: minutesRemaining
+	};
+
+	return timeRemainingObj;
+}
+
+const pickFutureDate = function(minutes = 1) {
+	// select Date (minutes) from now
+	return new Date(Date.parse(new Date()) + minutes * 60 * 1000);
+}
+
+const initializeTimer = function(futureDate) {
+	// get ui components 
+	let minuteSpan = document.querySelector('.timer .minutes');
+	let secondSpan = document.querySelector('.timer .seconds');
+
+	// update clock func 
+	const updateClock = function() {
+
+		let timeRemaining = getTimeRemaining(futureDate);
+
+		// update ui
+		minuteSpan.innerHTML = ('0' + timeRemaining.minutes).slice(-2);
+		secondSpan.innerHTML = ('0' + timeRemaining.seconds).slice(-2);
+
+		// check if timer is done
+		if (timeRemaining.total <= 0) {
+			clearInterval(interval);
+		}
+
+	}
+
+	// setinterval
+	updateClock();
+	const interval = setInterval(updateClock, 1000);
+
+}
+
+
+/* WPM Functions ============================================================= */
+
+const setupTest = function() {
+
+	// reset word count
+	wordCount = 0;
+	updateWordCountUI(wordCount);
+
+	// new quote and clear input
+	resetQuoteAndInput();
+
+	// setup timer
+	const futureDate = pickFutureDate(5);
+	
+	initializeTimer(futureDate);
+
+
+}
 
 // current quote finished, select new 
 const setQuote = function() {
@@ -26,6 +97,20 @@ const setQuote = function() {
 	document.querySelector('.quote').innerHTML = "<p>" + currentQuote + "</p>";
 
 }
+
+const resetQuoteAndInput = function() {
+
+	disableInput();
+
+	clearInput();
+
+	setQuote();
+
+	enableInput();
+
+}
+
+/* Helper Functions ========================================================== */
 
 const getRandomNumber = function(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
@@ -46,17 +131,6 @@ const enableInput = function() {
 	document.querySelector('.input input').removeAttribute('disabled');
 }
 
-const resetQuoteAndInput = function() {
-
-	disableInput();
-
-	clearInput();
-
-	setQuote();
-
-	enableInput();
-
-}
 
 // compare the equality of two arrays
 const isEqual = function(a, b) {
@@ -134,6 +208,12 @@ const onInputListener = function(event) {
 }
 
 document.querySelector('.input input').addEventListener('keyup', onInputListener);
+
+const startWPMTest = function() {
+	setupTest();
+}
+
+document.querySelector('.start').addEventListener('click', startWPMTest);
 
 
 // reset user input on browser load
