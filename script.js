@@ -128,7 +128,7 @@ const setupTest = function() {
 	resetQuoteAndInput();
 
 	// setup timer
-	const futureDate = pickFutureDate(5);
+	const futureDate = pickFutureDate(numMinutes);
 	
 	initializeTimer(futureDate);
 
@@ -165,17 +165,14 @@ const getRandomNumber = function(min, max) {
 }
 
 const clearInput = function() {
-	// clear user input 
 	document.querySelector('.input input').value = "";
 }
 
 const disableInput = function() {
-	// add disabled attribute 
 	document.querySelector('.input input').setAttribute('disabled', "disabled");
 }
 
 const enableInput = function() {
-	// remove disable attr
 	document.querySelector('.input input').removeAttribute('disabled');
 }
 
@@ -274,14 +271,33 @@ const onInputListener = function(event) {
 document.querySelector('.input input').addEventListener('keyup', onInputListener);
 
 
-const startWPMTest = function() {
+const startBtnListener = function() {
 	overlayOff();
 
 	setupTest();
 }
 
-document.querySelector('.start').addEventListener('click', startWPMTest);
+document.querySelector('.start').addEventListener('click', startBtnListener);
 
+const radioBtnListener = function() {
+
+	// remove checked class from any other elements 
+	document.querySelectorAll('.list-item').forEach((item) => {
+		item.classList.remove('checked');
+
+		if (item === this) {
+			item.classList.add('checked');
+		}
+	});
+
+	// set num minutes 
+	numMinutes = this.children[0].value;
+
+}
+
+document.querySelectorAll('.list-item').forEach((item) => {
+	item.addEventListener('click', radioBtnListener);
+});
 
 // reset user input on browser load
 const resetBrowser = function() {
