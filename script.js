@@ -77,7 +77,7 @@ const calculateResults = function(charCount, minutesTyped) {
 	let wordCount = Math.floor(charCount / 5);
 
 	// calculate wpm 
-	let gross = (Math.floor(charCount / 5) / minutesTyped);
+	let gross = Math.floor((charCount / 5) / minutesTyped);
 
 	// let net = gross - ( errorCount / minutesTyped );
 
@@ -275,6 +275,8 @@ const startBtnListener = function() {
 	overlayOff();
 
 	setupTest();
+
+	document.querySelector('.input input').focus();
 }
 
 document.querySelector('.start').addEventListener('click', startBtnListener);
