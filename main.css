@@ -1,0 +1,48 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+p,
+input {
+	font-size: 1.8em;
+	color: #03120e;
+	font-family: 'Crimson Text', serif;
+	/*text-shadow: .1px .1px 1px #444545;*/
+}
+
+.center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	width: 90%;
+	margin: 0 auto;
+	padding-top: 60px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.quote {
+	min-height: 150px;
+	width: 500px;
+	padding: 10px 30px;
+	background-color: #fffcf7;
+}
+
+.input {
+	padding: 10px 30px;
+}
+
+.input input {
+	border: none;
+	width: 100%;
+	text-align: center;
+}
+
+.highlight {
+	color: red;
+}
