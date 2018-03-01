@@ -56,6 +56,7 @@ const initializeTimer = function(futureDate) {
 
 		// check if timer is done
 		if (timeRemaining.total <= 0) {
+			endWPMTest();
 			clearInterval(interval);
 		}
 
@@ -70,6 +71,16 @@ const initializeTimer = function(futureDate) {
 
 /* WPM Functions ============================================================= */
 
+const endWPMTest = function() {
+
+	// get final word count
+	const finalWordCount = wordCount;
+
+	// display results 
+	
+	
+}
+
 const setupTest = function() {
 
 	// reset word count
@@ -80,7 +91,7 @@ const setupTest = function() {
 	resetQuoteAndInput();
 
 	// setup timer
-	const futureDate = pickFutureDate(5);
+	const futureDate = pickFutureDate();
 	
 	initializeTimer(futureDate);
 
@@ -208,6 +219,7 @@ const onInputListener = function(event) {
 }
 
 document.querySelector('.input input').addEventListener('keyup', onInputListener);
+
 
 const startWPMTest = function() {
 	setupTest();
