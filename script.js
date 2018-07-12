@@ -176,6 +176,7 @@ const disableInput = function() {
 
 const enableInput = function() {
 	document.querySelector('.input input').removeAttribute('disabled');
+	document.querySelector('.input input').focus();
 }
 
 
@@ -238,7 +239,7 @@ const onInputListener = function(event) {
 	const quoteArr = [...currentQuote];
 
 
-	// check if the user input matches the enire quote 
+	// check if the user input matches the entire quote 
 	if (quoteArr.length === inputArr.length && isEqual(quoteArr, inputArr)) {
 		// quote is complete, reset 
 		characterCount++;
